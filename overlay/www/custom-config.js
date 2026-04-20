@@ -20,5 +20,9 @@ var customConfig = {
     { id: "Weimar_indoor", label: "Weimar (indoor)" },
   ],
   community_command_template:
-    "uci set freifunk.community.name='${community}'\nuci commit freifunk",
+    '[ -n "$(uci -q get freifunk.community.name 2>/dev/null)" ] && exit 0\n' +
+    "uci -m import freifunk < /dev/null\n" +
+    "uci -q show freifunk.community >/dev/null 2>&1 || uci set freifunk.community=public\n" +
+    "uci set freifunk.community.name='${community}'\n" +
+    "uci commit freifunk",
 };
