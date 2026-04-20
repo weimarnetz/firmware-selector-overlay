@@ -1,0 +1,8 @@
+upstream:
+  repository: https://github.com/openwrt/firmware-selector-openwrt-org.git
+  commit: 8be522af35b72ed1ee803bca9e9c66510a556fb4
+  describe: v5.0.4-29-g43ce94b7
+  tracked_paths:
+    - README.md
+    - www/config.js
+    - www/js/main.js

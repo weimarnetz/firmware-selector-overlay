@@ -1,0 +1,45 @@
+name: Build custom firmware selector artifact
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout overlay repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Read upstream lock
+        run: |
+          echo "UPSTREAM_REPO=$(awk '/^  repository: /{print $2}' upstream.lock.yml)" >> "$GITHUB_ENV"
+          echo "UPSTREAM_COMMIT=$(awk '/^  commit: /{print $2}' upstream.lock.yml)" >> "$GITHUB_ENV"
+
+      - name: Checkout pinned upstream
+        run: |
+          git clone "${UPSTREAM_REPO}" upstream-src
+          git -C upstream-src checkout "${UPSTREAM_COMMIT}"
+
+      - name: Run tests
+        run: |
+          UPSTREAM_DIR=upstream-src node --test tests/js/*.test.js
+
+      - name: Build artifact
+        run: |
+          bash ./scripts/build-overlay.sh --upstream-dir upstream-src --output-dir dist
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: firmware-selector-www
+          path: |
+            dist/www.tar.gz
+            dist/www.tar.gz.sha256

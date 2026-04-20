@@ -1,0 +1,170 @@
+{
+  "dlink,dir-859-a1": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "glinet,gl-x750": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca9887-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca9887"
+  ],
+  "joyit,jt-or750i": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca9887-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca9887"
+  ],
+  "tplink,archer-a7-v5": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "tplink,archer-c2-v3": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca9887-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca9887"
+  ],
+  "tplink,archer-c25-v1": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9887-ct",
+    "ath10k-firmware-qca9887"
+  ],
+  "tplink,archer-c5-v1": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "tplink,archer-c58-v1": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888"
+  ],
+  "tplink,archer-c6-v2": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888",
+    "-iperf",
+    "-tcpdump"
+  ],
+  "tplink,archer-c60-v1": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888"
+  ],
+  "tplink,archer-c60-v2": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888"
+  ],
+  "tplink,archer-c60-v3": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888",
+    "-iperf",
+    "-tcpdump"
+  ],
+  "tplink,archer-c7-v2": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "ath10k-firmware-qca988x"
+  ],
+  "tplink,archer-c7-v5": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "ath10k-firmware-qca988x"
+  ],
+  "tplink,archer-d50-v1": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "tplink,eap225-outdoor-v1": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888"
+  ],
+  "tplink,eap225-outdoor-v3": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888"
+  ],
+  "tplink,eap225-v3": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca9888-ct",
+    "ath10k-firmware-qca9888"
+  ],
+  "tplink,re350k-v1": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "tplink,re450-v2": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x",
+    "-iperf",
+    "-tcpdump-mini"
+  ],
+  "ubnt,nanobeam-ac": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "ubnt,nanostation-ac": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "ubnt,nanostation-ac-loco": [
+    "-kmod-ath10k-ct-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "ubnt,unifiac-lite": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "ubnt,unifiac-lr": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ],
+  "ubnt,unifiac-mesh": [
+    "-kmod-ath10k-ct",
+    "kmod-ath10k-smallbuffers",
+    "-ath10k-firmware-qca988x-ct",
+    "ath10k-firmware-qca988x"
+  ],
+  "ubnt,unifiac-mesh-pro": [
+    "-kmod-ath10k-ct",
+    "-ath10k-firmware-qca988x-ct",
+    "kmod-ath10k-smallbuffers",
+    "ath10k-firmware-qca988x"
+  ]
+}
