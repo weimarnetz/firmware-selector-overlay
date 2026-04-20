@@ -1,6 +1,14 @@
 export const communityBlockStart = "# --- custom-community:start ---";
 export const communityBlockEnd = "# --- custom-community:end ---";
 
+/** True, wenn der Image-Ordner von ASU stammt (Upstream setzt …/store/… nach dem Build). */
+export function isAsuFirmwareStoreHref(href) {
+  if (!href || typeof href !== "string") {
+    return false;
+  }
+  return href.includes("/store/");
+}
+
 export function renderCommunityCommand(template, communityId) {
   if (!template || !communityId) {
     return "";

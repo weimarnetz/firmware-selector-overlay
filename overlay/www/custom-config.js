@@ -2,6 +2,8 @@
 
 var customConfig = {
   keep_asu_open: true,
+  /** Katalog-Downloads (Sysupgrade, Kernel, …) ausblenden; ASU-Build-Links bleiben sichtbar. */
+  hide_catalog_firmware_downloads: true,
   hide_static_footer_links: true,
   show_uci_defaults_editor: false,
   community_placeholder: "Keine Community",

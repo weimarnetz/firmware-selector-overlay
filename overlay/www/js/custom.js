@@ -1,7 +1,8 @@
-import { $, hide, show } from "./utils.js";
+import { $, $$, hide, show } from "./utils.js";
 import {
   communityBlockEnd,
   communityBlockStart,
+  isAsuFirmwareStoreHref,
   mergeCommunityDefaults,
   renderCommunityCommand,
 } from "./custom-core.js";
@@ -14,6 +15,7 @@ import {
 export {
   communityBlockEnd,
   communityBlockStart,
+  isAsuFirmwareStoreHref,
   mergeCommunityDefaults,
   renderCommunityCommand,
 };
@@ -25,6 +27,68 @@ function setupUciDefaultsToggle(customConfig) {
   }
 
   toggle.open = customConfig.show_uci_defaults_editor === true;
+}
+
+/**
+ * Versteckt Sysupgrade-/Kernel-Links vom OpenWrt-Katalog, lässt aber fertige ASU-Images
+ * stehen (gleiche Tabelle; ASU-Ordner enthält „/store/“). Läuft per queueMicrotask nach
+ * dem letzten DOM-Mutationsschritt von updateImages, damit nicht zeilenweise geleert wird.
+ */
+function setupCatalogDownloadFilter(customConfig) {
+  if (!customConfig?.hide_catalog_firmware_downloads) {
+    return;
+  }
+
+  const table = $("#download-table1");
+  if (!table) {
+    return;
+  }
+
+  let queued = false;
+  const apply = () => {
+    queued = false;
+    const folder = $("#image-folder");
+    const href =
+      folder && "href" in folder ? String(folder.href || "") : "";
+    const showBlock = isAsuFirmwareStoreHref(href);
+
+    for (const sel of ["#downloads1", "#downloads2"]) {
+      const el = $(sel);
+      if (!el) {
+        continue;
+      }
+      if (showBlock) {
+        el.classList.remove("hide");
+        el.style.removeProperty("display");
+      } else {
+        el.classList.add("hide");
+        el.style.setProperty("display", "none", "important");
+      }
+    }
+
+    if (showBlock) {
+      return;
+    }
+
+    $$("#download-table1 *").forEach((e) => e.remove());
+    $$("#download-links2 *").forEach((e) => e.remove());
+    $$("#download-extras2 *").forEach((e) => e.remove());
+  };
+
+  const schedule = () => {
+    if (queued) {
+      return;
+    }
+    queued = true;
+    queueMicrotask(() => {
+      apply();
+    });
+  };
+
+  new MutationObserver(schedule).observe(table, {
+    childList: true,
+    subtree: true,
+  });
 }
 
 function setupCommunitySelector(customConfig) {
@@ -149,6 +213,7 @@ export function initCustomFeatures(customConfig) {
   }
 
   setupUciDefaultsToggle(effectiveConfig);
+  setupCatalogDownloadFilter(effectiveConfig);
   setupCommunitySelector(effectiveConfig);
   setupPackageChanges(effectiveConfig);
 }

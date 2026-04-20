@@ -4,9 +4,28 @@ import assert from "node:assert/strict";
 import {
   communityBlockEnd,
   communityBlockStart,
+  isAsuFirmwareStoreHref,
   mergeCommunityDefaults,
   renderCommunityCommand,
 } from "../../overlay/www/js/custom-core.js";
+
+describe("ASU download URL detection", () => {
+  it("erkennt ASU-Store-Pfade", () => {
+    assert.equal(
+      isAsuFirmwareStoreHref("https://sysupgrade.openwrt.org/store/abc"),
+      true
+    );
+  });
+
+  it("lehnt Katalog-Targets-Pfade ab", () => {
+    assert.equal(
+      isAsuFirmwareStoreHref(
+        "https://downloads.openwrt.org/releases/23.05.4/targets/ath79/generic"
+      ),
+      false
+    );
+  });
+});
 
 describe("custom community defaults", () => {
   it("renders command from template and community", () => {
