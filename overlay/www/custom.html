@@ -4,9 +4,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>OpenWrt Firmware Selector (Custom)</title>
+    <title>Weimarnetz Firmware Builder (Custom)</title>
     <link rel="icon" href="favicon.ico" />
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="custom.css" />
     <script src="config.js"></script>
     <script src="custom-config.js"></script>
     <script type="module" src="js/main.js"></script>
@@ -15,8 +16,22 @@
   <body>
     <header>
       <div>
-        <a href="https://openwrt.org">
-          <img src="logo.svg" width="180" alt="Logo" />
+        <a href="https://weimarnetz.de" class="brand-logo">
+          <img
+            class="brand-logo__img brand-logo__img--light"
+            src="images/weimarnetz-light.svg"
+            width="180"
+            height="173"
+            alt="Weimarnetz"
+          />
+          <img
+            class="brand-logo__img brand-logo__img--dark"
+            src="images/weimarnetz-dark.svg"
+            width="180"
+            height="173"
+            alt=""
+            aria-hidden="true"
+          />
         </a>
         <div style="flex-grow: 1"></div>
         <div>
@@ -33,7 +48,7 @@
 
     <div class="container">
       <div>
-        <h2 class="tr-load">Download OpenWrt Firmware for your Device</h2>
+        <h2 class="tr-load">Build Weimarnetz Firmware for your Device</h2>
         <p class="tr-message">
           Type the name or model of your device, then select a stable build or
           the nightly "snapshot" build.

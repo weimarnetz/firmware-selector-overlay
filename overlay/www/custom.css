@@ -1,0 +1,198 @@
+/* Weimarnetz / Freifunk – Ergänzung zu index.css (nur custom.html) */
+
+:root {
+  --wn-bg: #f4f4f5;
+  --wn-surface: #ffffff;
+  --wn-text: #18181b;
+  --wn-text-muted: #52525b;
+  /* Heller Kopf: light-Logo ist für helle Flächen gedacht */
+  --wn-header-bg: #fafafa;
+  --wn-header-accent: #ffc726;
+  --wn-accent: #dc0067;
+  --wn-accent-hover: #b80055;
+  --wn-input-bg: #e4e4e7;
+  --wn-border: #d4d4d8;
+  --wn-row-border: #d4d4d8;
+  --wn-asu-info-bg: #fce8f0;
+  --wn-asu-error-bg: #fee2e2;
+  --wn-link: #b80055;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --wn-bg: #0f0f10;
+    --wn-surface: #18181b;
+    --wn-text: #e4e4e7;
+    --wn-text-muted: #a1a1aa;
+    --wn-header-bg: #0c0c0d;
+    --wn-header-accent: #ffc726;
+    --wn-accent: #e8488a;
+    --wn-accent-hover: #ff6cab;
+    --wn-input-bg: #27272a;
+    --wn-border: #3f3f46;
+    --wn-row-border: #3f3f46;
+    --wn-asu-info-bg: #29151f;
+    --wn-asu-error-bg: #3b1518;
+    --wn-link: #ff8cc8;
+  }
+}
+
+html {
+  color-scheme: light dark;
+}
+
+body {
+  background-color: var(--wn-bg);
+  color: var(--wn-text);
+}
+
+header {
+  background-color: var(--wn-header-bg);
+  border-bottom: 3px solid var(--wn-header-accent);
+  box-shadow: 0 0.08em 0.2em rgba(0, 0, 0, 0.06);
+}
+
+@media (prefers-color-scheme: dark) {
+  header {
+    box-shadow: 0 0.125em 0.35em rgba(0, 0, 0, 0.25);
+  }
+}
+
+#footer a {
+  color: var(--wn-link);
+}
+
+#footer a:hover {
+  text-decoration: underline;
+}
+
+.container > div {
+  background-color: var(--wn-surface);
+  box-shadow: 0 0.06em 0.25em rgba(0, 0, 0, 0.08);
+}
+
+.autocomplete > input,
+#versions {
+  background-color: var(--wn-input-bg);
+  color: var(--wn-text);
+  border-color: transparent;
+}
+
+.autocomplete-items {
+  background-color: var(--wn-surface);
+  border-color: var(--wn-border);
+}
+
+.autocomplete-items div {
+  border-color: var(--wn-border);
+}
+
+.autocomplete-active,
+.autocomplete-items div:hover {
+  background-color: var(--wn-accent);
+  color: #fff;
+}
+
+#languages-button {
+  background-color: var(--wn-accent);
+  color: #fff;
+}
+
+#languages-button:hover {
+  background-color: var(--wn-accent-hover);
+}
+
+#asu-packages,
+#uci-defaults-content {
+  background-color: var(--wn-input-bg);
+  color: var(--wn-text);
+  border: 1px solid var(--wn-border);
+  border-radius: 0.25em;
+}
+
+#community-select {
+  background-color: var(--wn-input-bg);
+  color: var(--wn-text);
+  border: 1px solid var(--wn-border);
+  border-radius: 0.25em;
+  padding: 0.5em 0.8em;
+  font-size: inherit;
+  min-width: 12em;
+}
+
+.download-link,
+.custom-link {
+  background-color: var(--wn-accent);
+  color: #fff;
+}
+
+.download-link:hover,
+.download-link-hover,
+.custom-link:hover,
+.custom-link-hover {
+  background-color: var(--wn-accent-hover);
+}
+
+#download-table1 tr {
+  border-color: var(--wn-row-border);
+}
+
+.asu-info {
+  background-color: var(--wn-asu-info-bg);
+  color: var(--wn-text);
+}
+
+.asu-error {
+  background-color: var(--wn-asu-error-bg);
+  color: var(--wn-text);
+}
+
+#image-info,
+#image-folder,
+#image-link {
+  filter: invert(0%) sepia(90%) saturate(970%) hue-rotate(149deg)
+    brightness(115%) contrast(108%);
+}
+
+@media (prefers-color-scheme: dark) {
+  #image-info,
+  #image-folder,
+  #image-link,
+  #uci-defaults-template {
+    filter: invert(100%) sepia(9%) saturate(261%) hue-rotate(281deg)
+      brightness(117%) contrast(100%);
+  }
+
+  .autocomplete-items div,
+  .autocomplete-items,
+  #download-table1 tr {
+    border-color: var(--wn-border);
+  }
+}
+
+/* Logo: hell / dunkel je nach Systempräferenz */
+.brand-logo {
+  display: inline-block;
+  line-height: 0;
+}
+
+.brand-logo__img {
+  width: 180px;
+  max-width: min(180px, 42vw);
+  height: auto;
+  vertical-align: middle;
+}
+
+.brand-logo__img--dark {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  .brand-logo__img--light {
+    display: none;
+  }
+
+  .brand-logo__img--dark {
+    display: inline-block;
+  }
+}
