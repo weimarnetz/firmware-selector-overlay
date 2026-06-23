@@ -52,22 +52,30 @@ function setupCatalogDownloadFilter(customConfig) {
       folder && "href" in folder ? String(folder.href || "") : "";
     const showBlock = isAsuFirmwareStoreHref(href);
 
+    if (showBlock) {
+      const d1 = $("#downloads1");
+      const d2 = $("#downloads2");
+      if (d1) {
+        d1.classList.remove("hide");
+        d1.style.removeProperty("display");
+      }
+      if (d2) {
+        d2.classList.remove("hide");
+        d2.style.removeProperty("display");
+        /* Upstream: downloads2 ist nur für schmale Viewports; ohne display:none erscheint
+           dieselbe SYSUPGRADE-Zeile doppelt (Tabelle + download-links2). */
+        d2.style.display = "none";
+      }
+      return;
+    }
+
     for (const sel of ["#downloads1", "#downloads2"]) {
       const el = $(sel);
       if (!el) {
         continue;
       }
-      if (showBlock) {
-        el.classList.remove("hide");
-        el.style.removeProperty("display");
-      } else {
-        el.classList.add("hide");
-        el.style.setProperty("display", "none", "important");
-      }
-    }
-
-    if (showBlock) {
-      return;
+      el.classList.add("hide");
+      el.style.setProperty("display", "none", "important");
     }
 
     $$("#download-table1 *").forEach((e) => e.remove());
