@@ -110,7 +110,8 @@ header {
   border-radius: 0.25em;
 }
 
-#community-select {
+#community-select,
+#package-set-select {
   background-color: var(--wn-input-bg);
   color: var(--wn-text);
   border: 1px solid var(--wn-border);

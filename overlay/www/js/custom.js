@@ -11,6 +11,7 @@ import {
   createPackageChangesService,
   resolveBranchesUrl,
 } from "./package-changes.js";
+import { findPackageSet, normalizePackageList } from "./package-sets-core.js";
 
 export {
   communityBlockEnd,
@@ -137,11 +138,121 @@ function setupCommunitySelector(customConfig) {
   });
 }
 
+/**
+ * Paketsatz-Auswahl: ersetzt die komplette Paketliste durch ein vordefiniertes Profil.
+ * Die erste Option stellt die Gerätevorgabe wieder her. Bei Geräte-/Versionswechsel
+ * schreibt Upstream die Default-Pakete neu; wir snapshotten diese (und re-applyen ein
+ * aktives Profil), damit Reset und Wechsel konsistent bleiben.
+ */
+function setupPackageSets(customConfig, packageChangesApi) {
+  const group = $("#package-set-group");
+  const select = $("#package-set-select");
+  const packageInput = $("#asu-packages");
+  const sets = customConfig.package_sets || [];
+
+  if (!group || !select || !packageInput || sets.length === 0) {
+    if (group) {
+      hide(group);
+    }
+    return;
+  }
+
+  show(group);
+  select.innerHTML = "";
+
+  const placeholderOption = document.createElement("option");
+  placeholderOption.value = "";
+  placeholderOption.innerText =
+    customConfig.package_set_placeholder || "Standard (Gerätevorgabe)";
+  select.appendChild(placeholderOption);
+
+  for (const set of sets) {
+    const option = document.createElement("option");
+    option.value = set.id;
+    option.innerText = set.label;
+    select.appendChild(option);
+  }
+
+  let deviceDefault = packageInput.value || "";
+  let currentSetId = "";
+  let snapshotTimer = null;
+
+  /* Profil setzen und anschließend das Versions-Mapping (package_changes aus
+     branches.json) anwenden, damit Profile genauso behandelt werden wie der Default. */
+  const applySet = (set) => {
+    packageInput.value = normalizePackageList(set.packages);
+    if (packageChangesApi) {
+      void packageChangesApi.applyToTextarea();
+    }
+  };
+
+  const refreshDefault = () => {
+    deviceDefault = packageInput.value || "";
+    if (currentSetId) {
+      const set = findPackageSet(sets, currentSetId);
+      if (set) {
+        applySet(set);
+      }
+    }
+  };
+
+  const scheduleRefresh = () => {
+    if (snapshotTimer) {
+      clearTimeout(snapshotTimer);
+    }
+    /* Nach package-changes (50 ms Debounce) laufen, damit der Snapshot den
+       versions-gemappten Default erfasst. */
+    snapshotTimer = setTimeout(() => {
+      snapshotTimer = null;
+      refreshDefault();
+    }, 60);
+  };
+
+  select.addEventListener("change", () => {
+    const set = findPackageSet(sets, select.value);
+    if (!set) {
+      currentSetId = "";
+      packageInput.value = normalizePackageList(deviceDefault);
+      return;
+    }
+    if (!currentSetId) {
+      deviceDefault = packageInput.value || "";
+    }
+    currentSetId = set.id;
+    applySet(set);
+  });
+
+  const versionSelect = $("#versions");
+  const modelsInput = $("#models");
+  const imageVersion = $("#image-version");
+  const imageCode = $("#image-code");
+
+  if (versionSelect) {
+    versionSelect.addEventListener("change", scheduleRefresh);
+  }
+  if (modelsInput) {
+    modelsInput.addEventListener("change", scheduleRefresh);
+  }
+  if (imageVersion && imageCode) {
+    const observer = new MutationObserver(scheduleRefresh);
+    observer.observe(imageVersion, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+    observer.observe(imageCode, {
+      childList: true,
+      characterData: true,
+      subtree: true,
+    });
+  }
+}
+
 function setupPackageChanges(customConfig) {
   const config = window.config || {};
   const branchesUrl = resolveBranchesUrl(config, customConfig || {});
   if (!branchesUrl) {
-    return;
+    return null;
   }
 
   const packageInput = $("#asu-packages");
@@ -150,7 +261,7 @@ function setupPackageChanges(customConfig) {
   const imageVersion = $("#image-version");
   const imageCode = $("#image-code");
   if (!packageInput || !versionSelect) {
-    return;
+    return null;
   }
 
   const packageChanges = createPackageChangesService({ branchesUrl });
@@ -208,6 +319,8 @@ function setupPackageChanges(customConfig) {
       subtree: true,
     });
   }
+
+  return { applyToTextarea, scheduleApply };
 }
 
 export function initCustomFeatures(customConfig) {
@@ -223,5 +336,6 @@ export function initCustomFeatures(customConfig) {
   setupUciDefaultsToggle(effectiveConfig);
   setupCatalogDownloadFilter(effectiveConfig);
   setupCommunitySelector(effectiveConfig);
-  setupPackageChanges(effectiveConfig);
+  const packageChangesApi = setupPackageChanges(effectiveConfig);
+  setupPackageSets(effectiveConfig, packageChangesApi);
 }
