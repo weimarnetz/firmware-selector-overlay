@@ -11,7 +11,11 @@ import {
   createPackageChangesService,
   resolveBranchesUrl,
 } from "./package-changes.js";
-import { findPackageSet, normalizePackageList } from "./package-sets-core.js";
+import {
+  applyPackageSetDelta,
+  findPackageSet,
+  normalizePackageList,
+} from "./package-sets-core.js";
 
 export {
   communityBlockEnd,
@@ -139,10 +143,10 @@ function setupCommunitySelector(customConfig) {
 }
 
 /**
- * Paketsatz-Auswahl: ersetzt die komplette Paketliste durch ein vordefiniertes Profil.
+ * Paketsatz-Auswahl: wendet ein Profil als Delta (add/remove) auf die Gerätevorgabe an.
  * Die erste Option stellt die Gerätevorgabe wieder her. Bei Geräte-/Versionswechsel
  * schreibt Upstream die Default-Pakete neu; wir snapshotten diese (und re-applyen ein
- * aktives Profil), damit Reset und Wechsel konsistent bleiben.
+ * aktives Profil), damit Treiber gerätespezifisch bleiben.
  */
 function setupPackageSets(customConfig, packageChangesApi) {
   const group = $("#package-set-group");
@@ -177,10 +181,9 @@ function setupPackageSets(customConfig, packageChangesApi) {
   let currentSetId = "";
   let snapshotTimer = null;
 
-  /* Profil setzen und anschließend das Versions-Mapping (package_changes aus
-     branches.json) anwenden, damit Profile genauso behandelt werden wie der Default. */
+  /* Delta auf Gerätevorgabe, danach Versions-Mapping (package_changes). */
   const applySet = (set) => {
-    packageInput.value = normalizePackageList(set.packages);
+    packageInput.value = applyPackageSetDelta(deviceDefault, set);
     if (packageChangesApi) {
       void packageChangesApi.applyToTextarea();
     }

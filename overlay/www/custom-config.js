@@ -27,17 +27,44 @@ var customConfig = {
     "uci commit freifunk",
   /* Erste Dropdown-Option: stellt die ursprünglichen Gerätepakete wieder her. */
   package_set_placeholder: "Standard (Gerätevorgabe)",
-  /* Vordefinierte Paketprofile. Auswahl ersetzt den gesamten Paketlisten-Inhalt.
-     packages: ASU-Paketliste (Leerzeichen-getrennt, "-paket" entfernt ein Paket).
+  /* Vordefinierte Paketprofile als Delta auf die Gerätevorgabe.
+     add: Pakete ergänzen; remove: Pakete entfernen (gerätespezifische Treiber bleiben erhalten).
      Weitere Profile (z. B. "standard", "expert") nach gleichem Schema ergänzen. */
   package_sets: [
     {
       id: "minimal",
       label: "Minimal",
-      packages:
-        "base-files ca-bundle dnsmasq dropbear firewall4 fstools kmod-ath9k kmod-gpio-button-hotplug kmod-nft-offload libc libgcc libustream-mbedtls logd mtd netifd nftables odhcp6c odhcpd-ipv6only opkg ppp ppp-mod-pppoe procd-ujail swconfig uboot-envtools uci uclient-fetch urandom-seed urngd wpad-basic-mbedtls kmod-usb2 kmod-usb-ledtrig-usbport luci-app-attendedsysupgrade -kmod-ppp -ppp -ppp-mod-pppoe -wpad-mini wpad-mesh-mbedtls -wpad-basic-mbedtls -wpad-basic-wolfssl -firewall -firewall4 -wpad-basic kmod-ipt-nat kmod-ipt-conntrack iptables-mod-ipopt rpcd-mod-iwinfo rpcd iw tc uhttpd uhttpd-mod-ubus libiwinfo-lua olsrd olsrd-mod-arprefresh olsrd-mod-jsoninfo olsrd-mod-txtinfo olsrd-mod-nameservice olsrd-mod-watchdog olsrd-mod-dyn-gw weimarnetz-fastd-config fastd kmod-l2tp-eth resolveip weimarnetz-ffwizard -luci-app-weimarnetz weimarnetz-owm-exporter weimarnetz-button-config kmod-sched-cake prometheus-node-exporter-ucode prometheus-node-exporter-ucode-wifi prometheus-node-exporter-ucode-openwrt prometheus-node-exporter-ucode-dnsmasq prometheus-node-exporter-ucode-netstat weimarnetz-metrics-exporter weimarnetz-olsrinfo weimarnetz-banner weimarnetz-feed-opkg weimarnetz-basic-website",
+      /* remove: Abzug von der Gerätevorgabe (bei euch bereits volles Weimarnetz-Profil).
+         add: nur was in der Vorgabe fehlt. Gerätespezifische Treiber nicht anfassen. */
+      remove: [
+        "kmod-ppp",
+        "ppp",
+        "ppp-mod-pppoe",
+        "wpad-mini",
+        "wpad-basic-mbedtls",
+        "wpad-basic-wolfssl",
+        "wpad-basic",
+        "firewall",
+        "firewall4",
+        "luci-mod-admin-full",
+        "luci-mod-freifunk",
+        "freifunk-common-olsr",
+        "luci-app-olsr",
+        "luci-app-olsr-services",
+        "luci-theme-freifunk-generic",
+        "luci-i18n-base-de",
+        "luci-i18n-olsr-de",
+        "luci-i18n-freifunk-de",
+        "luci-app-weimarnetz",
+        "tcpdump-mini",
+        "iperf",
+      ],
+      add: [
+        "weimarnetz-olsrinfo",
+        "weimarnetz-basic-website",
+      ],
     },
-    // { id: "standard", label: "Standard", packages: "..." },
-    // { id: "expert", label: "Expert", packages: "..." },
+    // { id: "standard", label: "Standard", add: [...], remove: [...] },
+    // { id: "expert", label: "Expert", add: [...], remove: [...] },
   ],
 };
